@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>George Hacks - Project Archive 2024</title>
+  <meta name="description" content="George Hacks 2024 Project Archive: winners, runner-up, and featured projects." />
+
+  <link rel="stylesheet" href="../app/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../app/dist/app.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <link rel="shortcut icon" href="../assets/images/last.svg" />
+  <link rel="apple-touch-icon-precomposed" href="../assets/images/last.svg" />
+</head>
+
+<body class="header-fixed main">
+
+  <header id="header_main" class="header">
+    <div class="container">
+      <div id="site-header-inner">
+        <!-- <div class="header__logo">
+          <a href="/index.html#home">
+            <img src="assets/images/logo/logo-blue.png" alt="George Hacks">
+          </a>
+        </div> -->
+        <nav id="main-nav" class="main-nav">
+          <ul id="menu-primary-menu" class="menu">
+            <li class="menu-item"><a href="../index.html#home">Home</a></li>
+            <li class="menu-item"><a href="../index.html#about">About</a></li>
+            <li class="menu-item"><a href="../index.html#sponsors">Sponsors</a></li>
+            <li class="menu-item"><a href="../index.html#tracks">Tracks</a></li>
+            <li class="menu-item"><a href="../index.html#roadmap">Roadmap</a></li>
+  
+            <li class="menu-item menu-dropdown">
+              <a href="#project-archive">Project Archive ▾</a>
+              <ul class="submenu">
+                <li><a href="./projects-2025.html">2025</a></li>
+                <li><a href="./projects-2024.html">2024</a></li>
+              </ul>
+            </li>
+  
+            <li class="menu-item"><a href="../index.html#faqs">FAQs</a></li>
+          </ul>
+        </nav>
+  
+        <div class="header-cta">
+          <a class="tf-button btn-effect" href="./signin.html">
+            <span class="boder-fade"></span>
+            <span class="effect">Sign In</span>
+          </a>
+          <a target="_blank" class="tf-button btn-effect" href="https://app.youform.com/forms/yk5gfurm">
+            <span class="boder-fade"></span>
+            <span class="effect">Join Our Newsletter</span>
+          </a>
+        </div>
+  
+        <div class="mobile-button"><span></span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="project-archive" class="tf-section ghpa-section">
+    <div class="container ghpa-container">
+
+      
+      <header class="ghpa-hero" data-aos="fade-up" data-aos-duration="800">
+        <p class="h6 sub-title">PROJECT ARCHIVE</p>
+        <h1 class="ghpa-hero-title neo-title">
+          PAST HISTORY OF <span class="accent-text">WINNERS &amp; RUNNER-UPS</span>
+        </h1>
+
+        
+        <nav class="ghpa-year-selector" aria-label="Archive Year Selector">
+          <a class="ghpa-year-btn" href="./projects-2025.html">2025</a>
+          <a class="ghpa-year-btn is-active" href="./projects-2024.html">2024</a>
+        </nav>
+      </header>
+
+      <main>
+        
+        <!--
+        <section class="ghpa-winners" data-aos="fade-up" data-aos-duration="800">
+          <div class="ghpa-section-header">
+            <h2 class="neo-title">Featured Highlights: 2024</h2>
+          </div>
+          <div class="ghpa-timeline-grid" id="ghpaFeaturedGrid"></div>
+        </section>
+        -->
+
+        
+        <section class="ghpa-gallery" data-aos="fade-up" data-aos-duration="800">
+          <div class="ghpa-section-header">
+            <h2 class="neo-title">Project Gallery</h2>
+          </div>
+
+          
+          <div class="ghpa-project-grid" id="ghpaGalleryGrid"></div>
+        </section>
+      </main>
+    </div>
+
+    
+    <button class="ghpa-backtotop" id="ghpaBackToTop" aria-label="Back to Top" style="display:none;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 15l-6-6-6 6"></path>
+      </svg>
+    </button>
+  </section>
+
+  <!-- Scripts -->
+  <script src="app/js/jquery.min.js"></script>
+  <script src="app/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+
+  <script>
+  (function () {
+    const root = document.getElementById("project-archive");
+    if (!root) return;
+
+   const TRACK_LABELS = {
+  t1: "Education & Equality",
+  t2: "Energy & Infrastructure",
+  t3: "Nutrition & Environment",
+  t4: "Create Your Own"
+};
+const projects2024 = [
+  {
+    id: "p01",
+    year: 2024,
+    award: "Winner",
+    title: "Blockchain Health Care",
+    track: "t3",
+    description: "A blockchain-based healthcare platform that enables patients to securely store and share medical records with doctors across hospitals using consent-driven access control.",
+    pdf: "../assets/project_2024/Blockchain_Health_Care_MANVIRANKAWAT.pdf"
+  },
+  {
+    id: "p02",
+    year: 2024,
+    award: "Runner-Up",
+    title: "FDA Compliance Checker: Gene-Us",
+    track: "t3",
+    description: "A compliance analysis tool that helps evaluate FDA-related healthcare data by improving transparency, accuracy, and regulatory awareness in medical workflows.",
+    pdf: "../assets/project_2024/FDAComplianceCheckerGeneUs_GabrielleBruce.pdf"
+  },
+  {
+    id: "p03",
+    year: 2024,
+    award: "Other",
+    title: "Neuro-Sync-Tech",
+    track: "t3",
+    description: "An AI-powered neurocare decision support platform that delivers expert neurological insights using large-scale model inference to improve diagnostic reach and reduce consultation costs.",
+    pdf: "../assets/project_2024/NeurosyntechParvBhargava.pdf"
+  },
+  {
+    id: "p04",
+    year: 2024,
+    award: "Other",
+    title: "Robotics in the Patient Care Environment",
+    track: "t3",
+    description: "A healthcare robotics solution that leverages AI-powered translation and patient data access to reduce nurse workload, improve communication, and minimize medical errors.",
+    pdf: "../assets/project_2024/robotsKianaKamrava.pdf"
+  },
+  {
+    id: "p05",
+    year: 2024,
+    award: "Other",
+    title: "Modular Wheelchair Ramp",
+    track: "t2",
+    description: "An affordable, modular wheelchair ramp designed to improve accessibility through a portable, easy-to-assemble solution for dynamic public and private spaces.",
+    pdf: "../assets/project_2024/Team2AnushaShah.pdf"
+  },
+  {
+    id: "p06",
+    year: 2024,
+    award: "Other",
+    title: "Visual Interface for Seamless Interaction, Operation & Navigation",
+    track: "t4",
+    description: "An eye-gaze-controlled XR interface that enables hands-free, accessible interaction for patients with disabilities and healthcare providers through a simple, adaptable user interface.",
+    pdf: "../assets/project_2024/team5SiMingZhou.pdf"
+  },
+  {
+    id: "p07",
+    year: 2024,
+    award: "Other",
+    title: "MedScribe",
+    track: "t3",
+    description: "A multilingual platform that simplifies and translates clinical trial consent documents using summaries, text-to-speech, e-signatures, and a chatbot to improve accessibility and inclusion in medical research.",
+    pdf: "../assets/project_2024/team6HemangVasu.pdf"
+  },
+  {
+    id: "p08",
+    year: 2024,
+    award: "Other",
+    title: "BlockCare",
+    track: "t3",
+    description: "A blockchain-based healthcare platform that enables secure, patient-controlled sharing of medical records across hospitals while ensuring privacy and data integrity.",
+    pdf: "../assets/project_2024/Team7AdityaSingh.pdf"
+  },
+  {
+    id: "p09",
+    year: 2024,
+    award: "Other",
+    title: "AskJ",
+    track: "t2",
+    description: "A pocket-sized, portable wheelchair access ramp designed to improve safety, accessibility, and inclusivity at social events and public spaces lacking permanent infrastructure.",
+    pdf: "../assets/project_2024/Team10AskJKaamaakshiKaushik.pdf"
+  },
+  {
+    id: "p10",
+    year: 2024,
+    award: "Other",
+    title: "RELIANT",
+    track: "t3",
+    description: "An AI-powered platform that improves clinical trial inclusivity by translating and simplifying consent documents to reduce language barriers and build trust among diverse participants.",
+    pdf: "../assets/project_2024/Team14KhushJayantShah.pdf"
+  },
+  {
+    id: "p11",
+    year: 2024,
+    award: "Other",
+    title: "Medication Buggies",
+    track: "t3",
+    description: "An automated medication delivery system that reduces nursing errors by streamlining dispensing, verification, and administration through smart robotic buggies.",
+    pdf: "../assets/project_2024/Team17EthanStelmakh.pdf"
+  },
+  {
+    id: "p12",
+    year: 2024,
+    award: "Other",
+    title: "Improving Medical Device Evaluation",
+    track: "t3",
+    description: "An AI-assisted early warning system that analyzes medical device testing and failure data to help identify potentially risky devices before market approval.",
+    pdf: "../assets/project_2024/UpatedTeam11GeorgeHacks2024Hanh Hoang.pdf"
+  }
+];
+
+const projects = projects2024.map(p => ({
+  ...p,
+  description: p.description || "",
+  pdf: p.pdf || "#"
+}));
+
+    // const featuredGrid = document.getElementById("ghpaFeaturedGrid");
+    const galleryGrid  = document.getElementById("ghpaGalleryGrid");
+
+    const backToTop = document.getElementById("ghpaBackToTop");
+
+    const currentYear = 2024;
+    function createEl(tag, className, text) {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text !== undefined && text !== null) el.textContent = text;
+      return el;
+    }
+
+    function createLink(href, text) {
+      const link = createEl("a", "ghpa-btn", text);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.href = href || "#";
+      return link;
+    }
+
+    /*
+    function renderFeatured() {
+      const items = projects.filter(p =>
+        p.year === currentYear && (p.award === "Winner" || p.award === "Runner-Up")
+      );
+
+      featuredGrid.innerHTML = "";
+      if (!items.length) {
+        const empty = createEl("div", "ghpa-empty", "No featured projects yet.");
+        featuredGrid.appendChild(empty);
+        return;
+      }
+
+      items.forEach(p => {
+        const card = createEl(
+          "article",
+          `ghpa-winner-card${p.award === "Runner-Up" ? " is-runner" : ""}`
+        );
+
+        const title = createEl("h3", "ghpa-winner-title", p.title || "");
+        card.appendChild(title);
+
+        const desc = createEl("p", "ghpa-impact-line", p.description || "");
+        card.appendChild(desc);
+
+        const link = createLink(p.pdf, "Open");
+        card.appendChild(link);
+
+        featuredGrid.appendChild(card);
+      });
+    }
+    */
+
+    function renderGallery(list) {
+      galleryGrid.innerHTML = "";
+      if (!list.length) {
+        const empty = createEl("div", "ghpa-empty", "No archives found matching your criteria.");
+        galleryGrid.appendChild(empty);
+        return;
+      }
+
+      list.forEach(p => {
+        const card = createEl("article", "ghpa-project-card");
+
+        const header = createEl("div", "ghpa-card-header");
+
+        if (p.track) {
+          const track = createEl("span", "ghpa-badge ghpa-track", TRACK_LABELS[p.track] || p.track);
+          header.appendChild(track);
+        }
+
+        const award = createEl("span", "ghpa-badge ghpa-award", p.award || "");
+        header.appendChild(award);
+
+        card.appendChild(header);
+
+        const title = createEl("h4", "ghpa-project-title", p.title || "");
+        card.appendChild(title);
+
+        const desc = createEl("p", "ghpa-project-desc", p.description || "");
+        card.appendChild(desc);
+
+        const link = createLink(p.pdf, "Open");
+        card.appendChild(link);
+
+        galleryGrid.appendChild(card);
+      });
+    }
+
+    
+    function filterGallery() {
+      const filtered = projects.filter(p => {
+        const matchesYear = p.year === currentYear;
+        return matchesYear;
+      });
+
+      renderGallery(filtered);
+    }
+
+    function setupBackToTop() {
+      if (!backToTop) return;
+
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY || document.documentElement.scrollTop;
+        backToTop.style.display = y > 500 ? "flex" : "none";
+      });
+
+      backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    }
+
+    // renderFeatured();
+    filterGallery();
+    setupBackToTop();
+  })();
+  
+  </script>
+  <script src="app/js/jquery.min.js"></script>
+  <script src="app/js/bootstrap.min.js"></script>
+  <script src="app/js/swiper-bundle.min.js"></script>
+  <script src="app/js/swiper.js"></script>
+  <script src="app/js/app.js"></script>
+  <script src="app/js/jquery.easing.js"></script>
+  <script src="app/js/parallax.js"></script>
+  <script src="app/js/jquery.magnific-popup.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+id,month,step,time,title,loc,cat,desc
+1,April,0,9:00 AM,Check-in + Breakfast,SEH B1 Level,announcement,"Badge pickup, breakfast, and seating. Get ready for kickoff."
+2,April,1,10:00 AM,Opening Ceremony,SEH B1 Stage,main,"Welcome, theme overview, rules, judging criteria, and sponsor intros."
+3,April,1,12:00 PM,Lunch,SEH B1 Level,food,Lunch served; dietary options available.
+4,April,1,1:00 PM,Mentor Hours Begin,Mentor Hub (SEH B1),networking,"Get feedback on problem framing, architecture, and demo plan."
+5,April,1,2:00 PM,Workshop: Rapid Prototyping,SEH Room 101,workshop,Build an MVP quickly; prioritize features and scope.
+6,April,2,7:00 PM,Dinner,SEH B1 Level,food,Dinner served; refuel and keep building.
+7,April,2,9:00 PM,Late Night Games,SEH Room 101,networking,Quick break activities to recharge.
+8,April,2,11:59 PM,Devpost Submission Deadline,Devpost,main,"Submit project page, repo links, and demo video if required."
+9,April,3,9:00 AM,Final Review + Prep,SEH B1 Level,main,"Polish demo, finalize slides, and rehearse pitch."
+10,April,3,11:00 AM,Judging Begins,SEH Expo Area,main,Live demos and judge Q&A.
+11,April,3,3:30 PM,Winners Announced,SEH B1 Stage,main,"Awards, closing remarks, and group photo."
+12,April,3,4:00 PM,Closing Ceremony,SEH B1 Stage,announcement,"Wrap-up, next steps, and community announcements."

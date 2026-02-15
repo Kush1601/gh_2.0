@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>George Hacks - Project Archive 2024</title>
+    <meta name="description" content="George Hacks 2024 Project Archive: winners, runner-up, and featured projects." />
+
+    <link rel="stylesheet" href="../app/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="../app/dist/app.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="../assets/images/last.svg" />
+    <link rel="apple-touch-icon-precomposed" href="../assets/images/last.svg" />
+</head>
+
+<body class="header-fixed main">
+
+    <header id="header_main" class="header">
+        <div class="container">
+            <div id="site-header-inner">
+                <!-- <div class="header__logo">
+          <a href="/index.html#home">
+            <img src="assets/images/logo/logo-blue.png" alt="George Hacks">
+          </a>
+        </div> -->
+                <nav id="main-nav" class="main-nav">
+                    <ul id="menu-primary-menu" class="menu">
+                        <li class="menu-item"><a href="../index.html#home">Home</a></li>
+                        <li class="menu-item"><a href="../index.html#about">About</a></li>
+                        <li class="menu-item"><a href="../index.html#sponsors">Sponsors</a></li>
+                        <li class="menu-item"><a href="../index.html#tracks">Tracks</a></li>
+                        <li class="menu-item"><a href="../index.html#roadmap">Roadmap</a></li>
+
+                        <li class="menu-item menu-dropdown">
+                            <a href="#project-archive">Project Archive ▾</a>
+                            <ul class="submenu">
+                                <li><a href="./projects-2025.html">2025</a></li>
+                                <li><a href="./projects-2024.html">2024</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="menu-item"><a href="../index.html#faqs">FAQs</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-cta">
+                    <a class="tf-button btn-effect" href="./signin.html">
+                        <span class="boder-fade"></span>
+                        <span class="effect">Sign In</span>
+                    </a>
+                    <a target="_blank" class="tf-button btn-effect" href="https://app.youform.com/forms/yk5gfurm">
+                        <span class="boder-fade"></span>
+                        <span class="effect">Join Our Newsletter</span>
+                    </a>
+                </div>
+
+                <div class="mobile-button"><span></span></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="project-archive" class="tf-section ghpa-section">
+        <div class="container ghpa-container">
+
+
+            <header class="ghpa-hero" data-aos="fade-up" data-aos-duration="800">
+                <p class="h6 sub-title">PROJECT ARCHIVE</p>
+                <h1 class="ghpa-hero-title neo-title">
+                    PAST HISTORY OF <span class="accent-text">WINNERS &amp; RUNNER-UPS</span>
+                </h1>
+
+
+                <nav class="ghpa-year-selector" aria-label="Archive Year Selector">
+                    <a class="ghpa-year-btn is-active" href="./projects-2025.html">2025</a>
+                    <a class="ghpa-year-btn" href="./projects-2024.html">2024</a>
+                </nav>
+            </header>
+
+            <main>
+
+                <!--
+        <section class="ghpa-winners" data-aos="fade-up" data-aos-duration="800">
+          <div class="ghpa-section-header">
+            <h2 class="neo-title">Featured Highlights: 2024</h2>
+          </div>
+          <div class="ghpa-timeline-grid" id="ghpaFeaturedGrid"></div>
+        </section>
+        -->
+
+
+                <section class="ghpa-gallery" data-aos="fade-up" data-aos-duration="800">
+                    <div class="ghpa-section-header">
+                        <h2 class="neo-title">Project Gallery</h2>
+                    </div>
+
+
+                    <div class="ghpa-project-grid" id="ghpaGalleryGrid"></div>
+                </section>
+            </main>
+        </div>
+
+
+        <button class="ghpa-backtotop" id="ghpaBackToTop" aria-label="Back to Top" style="display:none;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 15l-6-6-6 6"></path>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Scripts -->
+    <script src="app/js/jquery.min.js"></script>
+    <script src="app/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+
+    <script>
+        (function () {
+            const root = document.getElementById("project-archive");
+            if (!root) return;
+
+            const TRACK_LABELS = {
+                t1: "Create Your Own Track",
+                t2: "Health & Education and Equality",
+                t3: "Health, Energy & Infrastructure",
+                t4: "Health & Environment",
+            };
+            const projects2025 = [
+                {
+                    id: "p01",
+                    year: 2025,
+                    award: "Winner",
+                    title: "Greenify",
+                    track: "t1",
+                    description: "Greenify connects urban communities with real-life reforestation projects, making environmental impact accessible, social, and rewarding",
+                    pdf: "https://devpost.com/software/greenify-4imnrx"
+                },
+                {
+                    id: "p02",
+                    year: 2025,
+                    award: "Winner",
+                    title: "DigitalMedics",
+                    track: "t2",
+                    description: "DigitalMedics is a fall-detection, button-derived emergency alert system that alerts 911 authorities and personal contacts through SMS text messages",
+                    pdf: "https://devpost.com/software/digitalmedics"
+                },
+                {
+                    id: "p03",
+                    year: 2025,
+                    award: "Winner",
+                    title: "WellNest",
+                    track: "t3",
+                    description: "Unlocking Open Source for Global Health - Making SDG-Aligned Projects Discoverable.",
+                    pdf: "https://devpost.com/software/wellnest-yk4n6m"
+                },
+                {
+                    id: "p04",
+                    year: 2025,
+                    award: "Winner",
+                    title: "RootSync",
+                    track: "t4",
+                    description: "AI-powered chatbot and IoT sensor system provide real-time soil data and smart crop rotation recommendations, improving yields, soil health, and farmer profits",
+                    pdf: "https://devpost.com/software/rootsync"
+                },
+                {
+                    id: "p05",
+                    year: 2025,
+                    award: "Winner",
+                    title: "Medical Wallet",
+                    track: "t2",
+                    description: "Medical Wallet is a blockchain-powered platform that allows patients in underserved communities control over their medical records, ensuring medical professionals can access data securely and quickly",
+                    pdf: "https://devpost.com/software/medical-wallet-track-2"
+                },
+                {
+                    id: "p06",
+                    year: 2025,
+                    award: "Other",
+                    title: "GrowWise",
+                    track: "t3",
+                    description: "Targeting biodiversity through innovative conglomeration and AI.",
+                    pdf: "https://devpost.com/software/growwise-d9gsxb"
+                },
+                {
+                    id: "p07",
+                    year: 2025,
+                    award: "Other",
+                    title: "REAL TIME DETECTION AND COLLECTION OF OCEAN DEBRIS",
+                    track: "t4",
+                    description: "This system will be used to collect and analyze marine debris, and to provide a report on the amount of marine debris collected and its impact on the environment.",
+                    pdf: "https://devpost.com/software/real-time-detection-and-collection-of-ocean-debris"
+                },
+                {
+                    id: "p08",
+                    year: 2025,
+                    award: "Other",
+                    title: "LawAssist",
+                    track: "t2",
+                    description: "LawAssist is a platform that uses AI to analyze legal documents and provide personalized recommendations for legal compliance and risk management.",
+                    pdf: "https://devpost.com/software/lawassist"
+                },
+                {
+                    id: "p09",
+                    year: 2025,
+                    award: "Other",
+                    title: "A Personalized Meal Recommendation System",
+                    track: "t3",
+                    description: "A personalized meal recommendation system that uses AI to analyze user preferences and provide recommendations for meals that are healthy, affordable, and sustainable.",
+                    pdf: "https://devpost.com/software/a-personalized-meal-recommendation-system"
+                },
+                {
+                    id: "p10",
+                    year: 2025,
+                    award: "Other",
+                    title: "Medi-Assist",
+                    track: "t2",
+                    description: "Conducts initial patient chats, provides second opinions on diagnoses, and simplifies medical documents. Enhances patient understanding and care through AI-powered communication and analysis.",
+                    pdf: "https://devpost.com/software/medi-assist"
+                },
+                {
+                    id: "p11",
+                    year: 2025,
+                    award: "Other",
+                    title: "Hack For Impact",
+                    track: "t1",
+                    description: "Automating SDG Metadata: Streamlining Alignment, Enhancing Accessibility.",
+                    pdf: "https://devpost.com/software/hack-for-impact"
+                },
+                {
+                    id: "p12",
+                    year: 2025,
+                    award: "Other",
+                    title: "FIELD GUARDIAN",
+                    track: "t4",
+                    description: "Develop a solution to this growing practice that could help increase biodiversity, reduce environmental damage, and sustain global food production.",
+                    pdf: "https://devpost.com/software/field-guardian"
+                },
+                {
+                    id: "p13",
+                    year: 2025,
+                    award: "Other",
+                    title: "Code Catalyst",
+                    track: "t1",
+                    description: "Empowering Open Source for Global Health Analyze, Align, and Amplify Your GitHub Repo's Impact on SDG 3: Good Health & Well-Being with Actionable Insights for Change!",
+                    pdf: "https://devpost.com/software/code-catalyst"
+                },
+                {
+                    id: "p14",
+                    year: 2025,
+                    award: "Other",
+                    title: "EGRET - Emotional Aware AI Companion",
+                    track: "t2",
+                    description: "AI companion for your emotional needs.",
+                    pdf: "https://devpost.com/software/egret-emotional-aware-ai-companion"
+                },
+                {
+                    id: "p15",
+                    year: 2025,
+                    award: "Other",
+                    title: "TerraSync",
+                    track: "t3",
+                    description: "TerraSync shifts the paradigm from farm-level to ecosystem-level management by combining AI-driven regional crop rotation and decentralized governance tools for cooperative resource sharing.",
+                    pdf: "https://devpost.com/software/terrasync"
+                },
+                {
+                    id: "p16",
+                    year: 2025,
+                    award: "Other",
+                    title: "NeoDoula",
+                    track: "t2",
+                    description: "NeoDoula aims to improve maternal-child health in low- and middle-income countries through the development of communication services and technologies.",
+                    pdf: "https://devpost.com/software/neodoula"
+                },
+                {
+                    id: "p17",
+                    year: 2025,
+                    award: "Other",
+                    title: "Medically Tailored Meals",
+                    track: "t4",
+                    description: "Our dashboard connects local farmers directly with healthcare meal programs. Farmers can see exactly which fresh foods patients in their community need for healing.",
+                    pdf: "https://devpost.com/software/medically-tailored-meals"
+                },
+                {
+                    id: "p18",
+                    year: 2025,
+                    award: "Other",
+                    title: "MOM - MY OWN MEDIC",
+                    track: "t2",
+                    description: "My Own Medic bridges healthcare gaps with AI-powered tracking, medication validation, risk prediction, and dietary guidance, ensuring proactive, personalized, and safer health management.",
+                    pdf: "https://devpost.com/software/mom-my-own-medic"
+                },
+                {
+                    id: "p19",
+                    year: 2025,
+                    award: "Other",
+                    title: "From Passive Patients to Active Participants",
+                    track: "t2",
+                    description: "From Passive Patients to Active Participants: Empowering Health Through AI-Powered Engagement.",
+                    pdf: "https://devpost.com/software/from-passive-patients-to-active-participants"
+                },
+                {
+                    id: "p20",
+                    year: 2025,
+                    award: "Other",
+                    title: "BridgeCare: Inclusive Telemedicine for All",
+                    track: "t2",
+                    description: "BridgeCare is a telemedicine platform that provides inclusive healthcare services to underserved communities by leveraging AI-powered translation, diagnosis, and treatment recommendations.",
+                    pdf: "https://devpost.com/software/bridgecare-inclusive-telemedicine-for-all"
+                },
+                {
+                    id: "p21",
+                    year: 2025,
+                    award: "Other",
+                    title: "NourishConnect",
+                    track: "t3",
+                    description: "AI School Nutritionist in your hand",
+                    pdf: "https://devpost.com/software/nourishconnect"
+                },
+                {
+                    id: "p22",
+                    year: 2025,
+                    award: "Other",
+                    title: "Decentralized Energy DAO",
+                    track: "t2",
+                    description: "Decentralized Energy DAO is a platform that uses AI to analyze energy data and provide recommendations for energy efficiency and sustainability.",
+                    pdf: "https://devpost.com/software/decentralized-energy-dao"
+                },
+                {
+                    id: "p23",
+                    year: 2025,
+                    award: "Other",
+                    title: "Aqua Lens",
+                    track: "t4",
+                    description: "Innovation of an AR water contamination educating system, called Aqua Lens, which covers the UN Sustainability Development Goal number 6 about clean water and sanitation",
+                    pdf: "https://devpost.com/software/aqua-lens"
+                },
+                {
+                    id: "p24",
+                    year: 2025,
+                    award: "Other",
+                    title: "",
+                    track: "t2",
+                    description: "At NutriSus, we are redefining how medically tailored meals (MTMs) are designed, delivered, and consumed.",
+                    pdf: "https://devpost.com/software/nutrisus"
+                },
+                {
+                    id: "p25",
+                    year: 2025,
+                    award: "Other",
+                    title: "Zero Waste",
+                    track: "t3",
+                    description: "Zero Waste is a platform that uses AI to analyze waste data and provide recommendations for waste reduction and sustainability.",
+                    pdf: "https://devpost.com/software/zero-waste-h930ys"
+                },
+                {
+                    id: "p26",
+                    year: 2025,
+                    award: "Other",
+                    title: "Health For All",
+                    track: "t2",
+                    description: "Our AI assistant enables smart prescriptions, doctor validation, and tracking, ensuring better adherence and safer treatments—all in a seamless digital workflow",
+                    pdf: "https://devpost.com/software/health-for-all-7x3yao"
+                },
+                {
+                    id: "p27",
+                    year: 2025,
+                    award: "Other",
+                    title: "AgriVantage",
+                    track: "t3",
+                    description: "AgriVantage: AI-Powered Voice Assistance for Smarter Farming",
+                    pdf: "https://devpost.com/software/agrivantage"
+                },
+                {
+                    id: "p28",
+                    year: 2025,
+                    award: "Other",
+                    title: "The Food Approach",
+                    track: "t3",
+                    description: "Strengthening the local food system one connection at a time",
+                    pdf: "https://devpost.com/software/the-food-approach"
+                },
+                {
+                    id: "p29",
+                    year: 2025,
+                    award: "Other",
+                    title: "EarthBrew",
+                    track: "t3",
+                    description: "A movement towards sustainable agriculture",
+                    pdf: "https://devpost.com/software/earthbrew"
+                },
+                {
+                    id: "p30",
+                    year: 2025,
+                    award: "Other",
+                    title: "Garden of Hope",
+                    track: "t4",
+                    description: "Nutritional meals for juveniles in detention centers",
+                    pdf: "https://devpost.com/software/garden-of-hope"
+                },
+                {
+                    id: "p31",
+                    year: 2025,
+                    award: "Other",
+                    title: "NourishEd",
+                    track: "t3",
+                    description: "ourishEd connects schools with local farms to provide fresh, nutritious meals for kids in need. Our AI-driven platform reduces waste, optimizes distribution, and builds a sustainable food ecosystem.",
+                    pdf: "https://devpost.com/software/nourished-bc6q70"
+                },
+                {
+                    id: "p32",
+                    year: 2025,
+                    award: "Other",
+                    title: "CropSwap",
+                    track: "t3",
+                    description: "Fusing time-honored crop practices with modern tech to empower sustainable farming.",
+                    pdf: "-sqd3a4"
+                },
+                {
+                    id: "p33",
+                    year: 2025,
+                    award: "Other",
+                    title: "HealthBridge AI",
+                    track: "t2",
+                    description: "Connecting every patient to the right doctor, in any language—quickly and confidently",
+                    pdf: "https://devpost.com/software/healthbridge-ai"
+                },
+                {
+                    id: "p34",
+                    year: 2025,
+                    award: "Other",
+                    title: "IExist",
+                    track: "t2",
+                    description: "IExist: Be seen, be safe",
+                    pdf: "https://devpost.com/software/iexist"
+                }
+            ];
+
+            const projects = projects2025.map(p => ({
+                ...p,
+                description: p.description || "",
+                pdf: p.pdf || "#"
+            }));
+
+            // const featuredGrid = document.getElementById("ghpaFeaturedGrid");
+            const galleryGrid = document.getElementById("ghpaGalleryGrid");
+
+            const backToTop = document.getElementById("ghpaBackToTop");
+
+            const currentYear = 2025;
+            function createEl(tag, className, text) {
+                const el = document.createElement(tag);
+                if (className) el.className = className;
+                if (text !== undefined && text !== null) el.textContent = text;
+                return el;
+            }
+
+            function createLink(href, text) {
+                const link = createEl("a", "ghpa-btn", text);
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.href = href || "#";
+                return link;
+            }
+
+            /*
+            function renderFeatured() {
+              const items = projects.filter(p =>
+                p.year === currentYear && (p.award === "Winner" || p.award === "Runner-Up")
+              );
+        
+              featuredGrid.innerHTML = "";
+              if (!items.length) {
+                const empty = createEl("div", "ghpa-empty", "No featured projects yet.");
+                featuredGrid.appendChild(empty);
+                return;
+              }
+        
+              items.forEach(p => {
+                const card = createEl(
+                  "article",
+                  `ghpa-winner-card${p.award === "Runner-Up" ? " is-runner" : ""}`
+                );
+        
+                const title = createEl("h3", "ghpa-winner-title", p.title || "");
+                card.appendChild(title);
+        
+                const desc = createEl("p", "ghpa-impact-line", p.description || "");
+                card.appendChild(desc);
+        
+                const link = createLink(p.pdf, "Open");
+                card.appendChild(link);
+        
+                featuredGrid.appendChild(card);
+              });
+            }
+            */
+
+            function renderGallery(list) {
+                galleryGrid.innerHTML = "";
+                if (!list.length) {
+                    const empty = createEl("div", "ghpa-empty", "No archives found matching your criteria.");
+                    galleryGrid.appendChild(empty);
+                    return;
+                }
+
+                list.forEach(p => {
+                    const card = createEl("article", "ghpa-project-card");
+
+                    const header = createEl("div", "ghpa-card-header");
+
+                    if (p.track) {
+                        const track = createEl("span", "ghpa-badge ghpa-track", TRACK_LABELS[p.track] || p.track);
+                        header.appendChild(track);
+                    }
+
+                    const award = createEl("span", "ghpa-badge ghpa-award", p.award || "");
+                    header.appendChild(award);
+
+                    card.appendChild(header);
+
+                    const title = createEl("h4", "ghpa-project-title", p.title || "");
+                    card.appendChild(title);
+
+                    const desc = createEl("p", "ghpa-project-desc", p.description || "");
+                    card.appendChild(desc);
+
+                    const link = createLink(p.pdf, "Open");
+                    card.appendChild(link);
+
+                    galleryGrid.appendChild(card);
+                });
+            }
+
+
+            function filterGallery() {
+                const filtered = projects.filter(p => {
+                    const matchesYear = p.year === currentYear;
+                    return matchesYear;
+                });
+
+                renderGallery(filtered);
+            }
+
+            function setupBackToTop() {
+                if (!backToTop) return;
+
+                window.addEventListener("scroll", () => {
+                    const y = window.scrollY || document.documentElement.scrollTop;
+                    backToTop.style.display = y > 500 ? "flex" : "none";
+                });
+
+                backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+            }
+
+            // renderFeatured();
+            filterGallery();
+            setupBackToTop();
+        })();
+
+    </script>
+    <script src="app/js/jquery.min.js"></script>
+    <script src="app/js/bootstrap.min.js"></script>
+    <script src="app/js/swiper-bundle.min.js"></script>
+    <script src="app/js/swiper.js"></script>
+    <script src="app/js/app.js"></script>
+    <script src="app/js/jquery.easing.js"></script>
+    <script src="app/js/parallax.js"></script>
+    <script src="app/js/jquery.magnific-popup.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | George Hacks</title>
+
+  <!-- Same CSS stack as website -->
+  <link rel="stylesheet" href="../app/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../app/dist/app.css" />
+  <link rel="stylesheet" href="../assets/font/font-awesome.css" />
+
+  <link rel="shortcut icon" href="../assets/images/last.svg" />
+
+  <style>
+    /* Website-matching background */
+    body {
+      background:
+        radial-gradient(60% 40% at 50% 20%, rgba(100, 184, 252, .12), transparent 60%),
+        #050505;
+    }
+
+    .auth-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 120px;
+    }
+
+    .auth-card {
+      position: relative;
+      background: #0b0f14;
+      border: 1px solid rgba(100, 184, 252, .25);
+      padding: 44px 42px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    /* Outer frame */
+    .auth-card:after {
+      content: "";
+      position: absolute;
+      inset: -22px;
+      border: 1px solid rgba(100, 184, 252, .15);
+      pointer-events: none;
+    }
+
+    .auth-title {
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .auth-accent {
+      width: 42px;
+      height: 3px;
+      background: #64b8fc;
+      margin: 0 auto 28px;
+    }
+
+    .auth-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      opacity: .5;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .auth-input {
+      width: 100%;
+      height: 52px;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, .12);
+      padding: 0 16px;
+      color: #fff;
+      outline: none;
+    }
+
+    .auth-input:focus {
+      border-color: #64b8fc;
+      box-shadow: 0 0 12px rgba(100, 184, 252, .12);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 20px 0 26px;
+      color: rgba(255, 255, 255, .25);
+      font-size: 10px;
+      letter-spacing: 4px;
+    }
+
+    .divider span {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .forgot {
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #64b8fc;
+    }
+
+    .pass-wrap {
+      position: relative;
+    }
+
+    .eye-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 0;
+      color: rgba(255, 255, 255, .35);
+      cursor: pointer;
+    }
+
+    .footer-text {
+      margin-top: 26px;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      opacity: .5;
+    }
+
+    .footer-text a {
+      color: #64b8fc;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body class="main">
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+
+      <!-- Back Home -->
+      <a href="../index.html" class="tf-button btn-effect" style="margin-bottom:22px;display:inline-flex;">
+        <span class="boder-fade"></span>
+        <span class="effect">← Back Home</span>
+      </a>
+
+      <!-- Welcome -->
+      <p style="
+        text-transform:uppercase;
+        letter-spacing:3px;
+        font-size:11px;
+        opacity:.6;
+        margin-bottom:8px;">
+        Welcome back
+      </p>
+
+      <h3 class="auth-title">Login</h3>
+      <div class="auth-accent"></div>
+
+      <!-- Google -->
+      <a href="#" class="tf-button btn-effect" style="
+     width:100%;
+     justify-content:center;
+     gap:12px;
+     margin-bottom:26px;
+     border:1px solid rgba(255,255,255,0.5);
+   " onclick="return false;">
+        <span class="boder-fade"></span>
+        <span class="effect" style="display:flex;align-items:center;gap:12px;">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="16">
+          CONTINUE WITH GOOGLE
+        </span>
+      </a>
+
+      <!-- OR -->
+      <div class="divider">
+        <span></span> OR <span></span>
+      </div>
+
+      <!-- Form -->
+      <form id="signinForm">
+        <label class="auth-label">Email Address</label>
+        <input class="auth-input" type="email" placeholder="EMAIL@EXAMPLE.COM" required>
+
+        <div style="display:flex;justify-content:space-between;margin-top:22px;">
+          <label class="auth-label">Password</label>
+          <a href="#" class="forgot" onclick="return false;">Forgot Password?</a>
+        </div>
+
+        <div class="pass-wrap">
+          <input id="password" class="auth-input" type="password" placeholder="••••••••" required>
+          <button type="button" class="eye-btn" onclick="togglePassword()">👁</button>
+        </div>
+
+        <!-- Login -->
+        <button type="submit" class="tf-button btn-effect" style="width:100%;margin-top:26px;border:1px solid #64b8fc;">
+          <span class="boder-fade"></span>
+          <span class="effect">LOGIN</span>
+        </button>
+      </form>
+
+      <div class="footer-text">
+        DON’T HAVE AN ACCOUNT?
+        <a href="#" onclick="return false;">SIGN UP</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const p = document.getElementById('password');
+      p.type = p.type === 'password' ? 'text' : 'password';
+    }
+
+    document.getElementById('signinForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      window.location.href = "../index.html";
+    });
+  </script>
+
+</body>
+
+</html>
