@@ -122,7 +122,12 @@
                     <div class="swiper-slide">
                         <div class="slider-st3">
                             <div class="overlay">
-                                <video src="assets/video/22.mp4" autoplay loop muted></video>
+                                <video autoplay muted loop playsinline preload="metadata"
+                                    poster="assets/images/hero-poster.jpg">
+                                    <source src="assets/video/22-mobile.mp4" type="video/mp4"
+                                        media="(max-width: 768px)">
+                                    <source src="assets/video/22.mp4" type="video/mp4">
+                                </video>
                             </div>
                             <div class="container">
                                 <div class="row">
@@ -425,7 +430,7 @@
                                             <img style="border-radius: 1px; width: 20em;"
                                                 src="assets/images/logo/we.png" alt="G-KnowMe">
                                         </a>
-                                    <!--  <a href="https://ospo.gwu.edu/" target='blank' rel="noopener noreferrer">
+                                        <!--  <a href="https://ospo.gwu.edu/" target='blank' rel="noopener noreferrer">
                                             <img style="border-radius: 1px; width: 25em;"
                                                 src="assets/images/logo/rt.png" alt="G-KnowMe">
                                         </a>
@@ -1106,7 +1111,8 @@
                                                 style="color: #64b8fc;">georgehacks@gwu.edu</a>. Do DM us on Instagram
                                             <a href="https://www.instagram.com/georgehacks" target="_blank"
                                                 rel="noopener noreferrer" style="color: #64b8fc;">@georgehacks</a> and
-                                            we will try to reply to your questions as soon as possible!</p>
+                                            we will try to reply to your questions as soon as possible!
+                                        </p>
                                     </div>
 
                                 </div>
