@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Judge Dashboard | George Hacks</title>
+
+  <!-- Same CSS stack as website -->
+  <link rel="stylesheet" href="../../app/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../../app/dist/app.css" />
+  <link rel="stylesheet" href="../../assets/font/font-awesome.css" />
+  <link rel="shortcut icon" href="../../assets/images/last.svg" />
+
+  <link rel="stylesheet" href="../../app/dist/judge.css" />
+</head>
+
+<body>
+
+  <div class="jd-container">
+    <div class="jd-header">
+      <h1 class="jd-judge-name" id="judgeNameDisplay">JUDGE NAME</h1>
+      <a href="../../index.html" class="jd-logout-btn">LOGOUT</a>
+    </div>
+    <div class="jd-section-title">Assigned Teams</div>
+
+    <div class="jd-teams-list" id="teamsListContainer">
+      <!-- Teams will be injected here via JS -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        let data;
+        // 1. Check LocalStorage for updated mocks
+        const cached = localStorage.getItem('judge_teams_data');
+        if (cached) {
+          data = JSON.parse(cached);
+        } else {
+          // 2. Load from JSON if empty
+          const response = await fetch('../../assets/data/judge_teams.json');
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          data = await response.json();
+          // pre-calc totals if needed
+          data.assignedTeams.forEach(t => {
+            if (t.totalScore === undefined) t.totalScore = 0;
+          });
+          localStorage.setItem('judge_teams_data', JSON.stringify(data));
+        }
+
+        // Set Judge Name
+        document.getElementById('judgeNameDisplay').textContent = data.judgeName.toUpperCase();
+
+        // Render Teams
+        const container = document.getElementById('teamsListContainer');
+
+        data.assignedTeams.forEach(team => {
+          // Status classes
+          const isSubmitted = team.status.toUpperCase() === 'SUBMITTED';
+          const statusClass = isSubmitted ? 'jd-status-submitted' : 'jd-status-pending';
+
+          // Create card HTML
+          const teamCardHTML = `
+            <div class="jd-team-card">
+              <div class="jd-team-header">
+                <h2 class="jd-team-name">${team.name}</h2>
+                <div class="jd-team-status ${statusClass}">${team.status}</div>
+              </div>
+              <p class="jd-team-subtitle">${team.subtitle}</p>
+              <p class="jd-team-description">${team.description}</p>
+              <button class="jd-action-btn" onclick="handleAction('${team.id}')">${team.actionText}</button>
+            </div>
+          `;
+
+          container.insertAdjacentHTML('beforeend', teamCardHTML);
+        });
+
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        document.getElementById('teamsListContainer').innerHTML = `
+          <p style="color: #ff6b6b; font-size: 14px;">Error loading assigned teams data.</p>
+        `;
+      }
+    });
+
+    function handleAction(teamId) {
+      window.location.href = `scoring-page.html?teamId=${teamId}`;
+    }
+  </script>
+
+</body>
+
+</html>

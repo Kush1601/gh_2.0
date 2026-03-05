@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scoring | George Hacks</title>
+
+    <link rel="stylesheet" href="../../app/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="../../app/dist/app.css" />
+    <link rel="stylesheet" href="../../assets/font/font-awesome.css" />
+    <link rel="stylesheet" href="../../app/dist/judge.css" />
+    <link rel="shortcut icon" href="../../assets/images/last.svg" />
+</head>
+
+<body>
+
+    <div class="jd-container" style="max-width: 900px; padding-top: 40px;">
+
+        <!-- Navigation back to dashboard -->
+        <a href="judge-dashboard.html" class="tf-button btn-effect"
+            style="margin-bottom:30px;display:inline-flex; transform: scale(0.85); transform-origin: left;">
+            <span class="boder-fade"></span>
+            <span class="effect">← Back to Dashboard</span>
+        </a>
+
+        <div class="jd-scoring-card" id="scoringCard">
+            <!-- Loading state -->
+            <div style="text-align:center; color: #a0aab2; padding: 40px;">Loading team data...</div>
+        </div>
+    </div>
+
+    <script>
+        // ----------------------------------------------------
+        // Mock Database Logic (shared between pages if needed)
+        // ----------------------------------------------------
+        async function getJudgeData() {
+            // 1. Check if we have modified data in localStorage
+            const cached = localStorage.getItem('judge_teams_data');
+            if (cached) {
+                return JSON.parse(cached);
+            }
+
+            // 2. Otherwise load initial data from JSON
+            try {
+                const response = await fetch('../../assets/data/judge_teams.json');
+                if (!response.ok) throw new Error('Failed to load JSON');
+                const data = await response.json();
+                // pre-calculate any missing totals
+                data.assignedTeams.forEach(t => {
+                    if (t.totalScore === undefined) t.totalScore = 0;
+                });
+                localStorage.setItem('judge_teams_data', JSON.stringify(data));
+                return data;
+            } catch (err) {
+                console.error("Error loading judge data:", err);
+                return null;
+            }
+        }
+
+        function saveJudgeData(data) {
+            localStorage.setItem('judge_teams_data', JSON.stringify(data));
+        }
+
+
+        // ----------------------------------------------------
+        // Scoring Page Logic
+        // ----------------------------------------------------
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get Team ID from URL parameters: scoring-page.html?teamId=healthsync
+            const urlParams = new URLSearchParams(window.location.search);
+            const teamId = urlParams.get('teamId');
+
+            if (!teamId) {
+                document.getElementById('scoringCard').innerHTML = `<div style="color:#ff6b6b">No Team ID provided. Return to dashboard.</div>`;
+                return;
+            }
+
+            const dbData = await getJudgeData();
+            if (!dbData) return;
+
+            const team = dbData.assignedTeams.find(t => t.id === teamId);
+            const criteriaList = dbData.scoreCriteria;
+
+            if (!team) {
+                document.getElementById('scoringCard').innerHTML = `<div style="color:#ff6b6b">Team not found.</div>`;
+                return;
+            }
+
+            renderScoringForm(team, criteriaList);
+        });
+
+        function renderScoringForm(team, criteriaList) {
+            const container = document.getElementById('scoringCard');
+            const isLocked = team.readOnly === true;
+
+            let html = `
+        <div class="jd-scoring-header">
+          <h1 class="jd-scoring-title">SCORING: ${team.name}</h1>
+          <p class="jd-scoring-subtitle">Score each criteria from 1 to 10</p>
+        </div>
+      `;
+
+            if (isLocked) {
+                html += `
+          <div class="jd-locked-banner">
+            VIEWING LOCKED SCORE
+          </div>
+        `;
+            }
+
+            html += `<form id="scoringForm">`;
+
+            // Render each Criteria Input
+            criteriaList.forEach(crit => {
+                const value = team.scores[crit.id] || '';
+
+                html += `
+          <div class="jd-criteria-item">
+            <span class="jd-criteria-name">${crit.name}</span>
+            <div class="jd-score-input-wrapper">
+              <input type="number" 
+                     class="jd-score-input score-calc" 
+                     name="${crit.id}" 
+                     min="1" max="10" 
+                     value="${value}" 
+                     ${isLocked ? 'readonly' : 'required'} 
+              />
+            </div>
+          </div>
+        `;
+            });
+
+            // Render Comments Textarea
+            html += `
+        <div class="jd-comments-section">
+          <label class="jd-comments-label">COMMENTS (MIN 20 CHARACTERS)</label>
+          <textarea class="jd-comments-textarea" 
+                    name="comments" 
+                    minlength="20"
+                    ${isLocked ? 'readonly' : 'required'} 
+                    placeholder="Enter your feedback here..."
+          >${team.comments || ''}</textarea>
+        </div>
+      `;
+
+            // Total Score Footer
+            html += `
+        <div class="jd-total-row">
+          <span class="jd-total-label">TOTAL SCORE</span>
+          <span class="jd-total-value" id="displayTotal">${team.totalScore || 0}</span>
+        </div>
+      `;
+
+            // Submit button (only if not locked)
+            if (!isLocked) {
+                html += `
+          <button type="submit" class="jd-submit-btn">
+            SUBMIT SCORES
+          </button>
+        `;
+            }
+
+            html += `</form>`;
+            container.innerHTML = html;
+
+            // Attach dynamic calculation for editable forms
+            if (!isLocked) {
+                setupDynamicCalculation();
+                setupFormSubmit(team.id);
+            }
+        }
+
+        function setupDynamicCalculation() {
+            const inputs = document.querySelectorAll('.score-calc');
+            const displayTotal = document.getElementById('displayTotal');
+
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    let sum = 0;
+                    inputs.forEach(inp => {
+                        const val = parseInt(inp.value, 10);
+                        if (!isNaN(val)) sum += val;
+                    });
+                    displayTotal.textContent = sum;
+                });
+            });
+        }
+
+        function setupFormSubmit(teamId) {
+            const form = document.getElementById('scoringForm');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Retrieve fresh data to update
+                const dbData = await getJudgeData();
+                const teamIndex = dbData.assignedTeams.findIndex(t => t.id === teamId);
+
+                if (teamIndex === -1) return;
+
+                const formData = new FormData(form);
+                const newScores = {};
+                let total = 0;
+
+                // Iterate over criteria
+                dbData.scoreCriteria.forEach(crit => {
+                    const val = parseInt(formData.get(crit.id), 10);
+                    newScores[crit.id] = val;
+                    total += val;
+                });
+
+                const comments = formData.get('comments');
+
+                // Update the mocked object
+                dbData.assignedTeams[teamIndex].scores = newScores;
+                dbData.assignedTeams[teamIndex].comments = comments;
+                dbData.assignedTeams[teamIndex].totalScore = total;
+                dbData.assignedTeams[teamIndex].readOnly = true; // Lock after submission
+                dbData.assignedTeams[teamIndex].status = "SUBMITTED";
+                dbData.assignedTeams[teamIndex].actionText = "VIEW SCORE";
+
+                // Save to LocalStorage
+                saveJudgeData(dbData);
+
+                alert("Scores submitted successfully!");
+
+                // Go back to dashboard or re-render
+                window.location.href = "judge-dashboard.html";
+            });
+        }
+    </script>
+</body>
+
+</html>
