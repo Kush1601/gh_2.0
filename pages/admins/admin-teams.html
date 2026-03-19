@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Teams</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0f1c;
+      color: white;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav button {
+      padding: 10px 20px;
+      background: #1a1f2e;
+      border: 1px solid #2e3a59;
+      color: white;
+      cursor: pointer;
+      border-radius: 20px;
+    }
+
+    .nav .active {
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+    }
+
+    .add-btn {
+      margin-top: 20px;
+      padding: 12px 18px;
+      background: transparent;
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .teams {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 3px solid #3aa0ff;
+    }
+
+    .team-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .team-desc {
+      color: #aaa;
+      margin: 5px 0;
+    }
+
+    .members {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-outline {
+      border: 1px solid #3aa0ff;
+      background: transparent;
+      color: white;
+    }
+
+    .btn-danger {
+      border: 1px solid red;
+      background: transparent;
+      color: red;
+    }
+
+    .logout {
+      border: 1px solid #999;
+      background: transparent;
+      padding: 6px 12px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="title">ADMIN PORTAL</div>
+    <button class="logout" onclick="logout()">LOGOUT</button>
+  </div>
+
+  <div class="nav">
+    <button class="active">TEAMS</button>
+    <button onclick="go('judges')">JUDGES</button>
+    <button onclick="go('assignments')">ASSIGNMENTS</button>
+    <button onclick="go('scores')">SCORES/AUDIT</button>
+  </div>
+
+  <button class="add-btn" onclick="go('add-team')">+ ADD NEW TEAM</button>
+
+  <div class="teams" id="teamsContainer"></div>
+
+</div>
+
+<script>
+function go(page){
+  window.location.href = `admin-${page}.html`;
+}
+
+function logout(){
+  window.location.href = "../signin.html";
+}
+
+// Mock data (localStorage)
+let teams = JSON.parse(localStorage.getItem("teams")) || [
+  {
+    id: 1,
+    name: "HealthSync",
+    track: "Health",
+    desc: "Real-time monitoring for elderly patients...",
+    members: ["Alice Wong", "Bob Smith"]
+  },
+  {
+    id: 2,
+    name: "EcoFlow",
+    track: "Sustainability",
+    desc: "Optimizing local power distribution...",
+    members: ["Charlie Day"]
+  }
+];
+
+localStorage.setItem("teams", JSON.stringify(teams));
+
+function renderTeams(){
+  const container = document.getElementById("teamsContainer");
+  container.innerHTML = "";
+
+  teams.forEach(team => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="team-title">${team.name}</div>
+      <div class="team-desc">${team.desc}</div>
+      <div class="members">Members (${team.members.length}): ${team.members.join(", ")}</div>
+
+      <div class="actions">
+        <button class="btn btn-outline" onclick="manageMembers(${team.id})">MANAGE MEMBERS</button>
+        <button class="btn btn-outline" onclick="editTeam(${team.id})">EDIT INFO</button>
+        <button class="btn btn-danger" onclick="deleteTeam(${team.id})">DELETE</button>
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function deleteTeam(id){
+  teams = teams.filter(t => t.id !== id);
+  localStorage.setItem("teams", JSON.stringify(teams));
+  renderTeams();
+}
+
+function manageMembers(id){
+  localStorage.setItem("selectedTeam", id);
+  window.location.href = "admin-members.html";
+}
+
+function editTeam(id){
+  localStorage.setItem("selectedTeam", id);
+  window.location.href = "admin-add-team.html";
+}
+
+renderTeams();
+</script>
+
+</body>
+</html>

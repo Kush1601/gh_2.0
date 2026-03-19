@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Judges</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0f1c;
+      color: white;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .logout {
+      border: 1px solid #999;
+      background: transparent;
+      color: white;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav button {
+      padding: 10px 20px;
+      background: #1a1f2e;
+      border: 1px solid #2e3a59;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .active {
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+    }
+
+    .add-btn {
+      margin-top: 20px;
+      padding: 12px 18px;
+      border: 1px solid #3aa0ff;
+      background: transparent;
+      color: #3aa0ff;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .info {
+      font-size: 14px;
+    }
+
+    .info div {
+      margin-bottom: 3px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-danger {
+      border: 1px solid red;
+      background: transparent;
+      color: red;
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="title">ADMIN PORTAL</div>
+    <button class="logout" onclick="logout()">LOGOUT</button>
+  </div>
+
+  <div class="nav">
+    <button onclick="go('teams')">TEAMS</button>
+    <button class="active">JUDGES</button>
+    <button onclick="go('assignments')">ASSIGNMENTS</button>
+    <button onclick="go('scores')">SCORES/AUDIT</button>
+  </div>
+
+  <button class="add-btn" onclick="go('register-judge')">+ REGISTER NEW JUDGE</button>
+
+  <div class="list" id="judgeList"></div>
+
+</div>
+
+<script>
+function go(page){
+  window.location.href = `admin-${page}.html`;
+}
+
+function logout(){
+  window.location.href = "../signin.html";
+}
+
+// Mock data
+let judges = JSON.parse(localStorage.getItem("judges")) || [
+  { id: 1, email: "judge1@test.com" },
+  { id: 2, email: "judge2@test.com" }
+];
+
+let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+let scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+localStorage.setItem("judges", JSON.stringify(judges));
+
+function render(){
+  const container = document.getElementById("judgeList");
+  container.innerHTML = "";
+
+  judges.forEach(j => {
+    const assigned = assignments.filter(a => a.judgeId == j.id).length;
+    const completed = scores.filter(s => s.judgeId == j.id).length;
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="info">
+        <div><b>${j.email}</b></div>
+        <div>Assigned: ${assigned}</div>
+        <div>Completed: ${completed}</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-danger" onclick="removeJudge(${j.id})">REMOVE</button>
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function removeJudge(id){
+  judges = judges.filter(j => j.id !== id);
+  localStorage.setItem("judges", JSON.stringify(judges));
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Judge</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0f1c;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .modal {
+      background: #111827;
+      padding: 30px;
+      border-radius: 12px;
+      width: 400px;
+      max-width: 90%;
+      border: 1px solid #2e3a59;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 12px;
+      color: #aaa;
+      display: block;
+      margin-top: 12px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      background: #0a0f1c;
+      border: 1px solid #2e3a59;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .cancel {
+      background: transparent;
+      border: 1px solid #555;
+      color: white;
+    }
+
+    .create {
+      background: transparent;
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="modal">
+
+  <div class="title">REGISTER NEW JUDGE</div>
+
+  <label>FULL NAME</label>
+  <input id="name" placeholder="John Doe">
+
+  <label>EMAIL</label>
+  <input id="email" placeholder="judge@example.com">
+
+  <label>PASSWORD</label>
+  <input id="password" type="password" placeholder="••••••••">
+
+  <div class="actions">
+    <button class="btn cancel" onclick="goBack()">CANCEL</button>
+    <button class="btn create" onclick="createJudge()">CREATE JUDGE</button>
+  </div>
+
+</div>
+
+<script>
+let judges = JSON.parse(localStorage.getItem("judges")) || [];
+
+function createJudge(){
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if(!name || !email || !password){
+    alert("All fields are required");
+    return;
+  }
+
+  // Prevent duplicate emails
+  const exists = judges.find(j => j.email === email);
+  if(exists){
+    alert("Judge with this email already exists");
+    return;
+  }
+
+  judges.push({
+    id: Date.now(),
+    name,
+    email,
+    password
+  });
+
+  localStorage.setItem("judges", JSON.stringify(judges));
+
+  window.location.href = "admin-judges.html";
+}
+
+function goBack(){
+  window.location.href = "admin-judges.html";
+}
+</script>
+
+</body>
+</html>

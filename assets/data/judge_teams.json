@@ -1,0 +1,64 @@
+{
+  "judgeName": "Dr. Sarah Smith",
+  "scoreCriteria": [
+    {
+      "id": "innovation",
+      "name": "INNOVATION"
+    },
+    {
+      "id": "technical",
+      "name": "TECHNICAL DIFFICULTY"
+    },
+    {
+      "id": "impact",
+      "name": "IMPACT"
+    },
+    {
+      "id": "presentation",
+      "name": "PRESENTATION/CLARITY"
+    }
+  ],
+  "assignedTeams": [
+    {
+      "id": "healthsync",
+      "name": "HEALTHSYNC",
+      "subtitle": "AI Vitals Monitor",
+      "description": "Real-time monitoring for elderly patients.",
+      "status": "SUBMITTED",
+      "actionText": "VIEW SCORE",
+      "readOnly": true,
+      "scores": {
+        "innovation": 3,
+        "technical": 5,
+        "impact": 5,
+        "presentation": 5
+      },
+      "comments": "1242141234awraefaefraerereq",
+      "totalScore": 18
+    },
+    {
+      "id": "ecoflow",
+      "name": "ECOFLOW",
+      "subtitle": "Smart Grid",
+      "description": "Optimizing local power distribution.",
+      "status": "PENDING",
+      "actionText": "SCORE TEAM",
+      "readOnly": false,
+      "scores": {},
+      "comments": "",
+      "totalScore": 0
+    },
+    {
+      "id": "eduquest",
+      "name": "EDUQUEST",
+      "subtitle": "VR History",
+      "description": "Interactive history lessons in virtual reality.",
+      "status": "PENDING",
+      "actionText": "SCORE TEAM",
+      "readOnly": false,
+      "scores": {},
+      "comments": "",
+      "totalScore": 0
+    }
+  ]
+}

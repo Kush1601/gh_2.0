@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scores / Audit</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0f1c;
+      color: white;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .logout {
+      border: 1px solid #999;
+      background: transparent;
+      color: white;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav button {
+      padding: 10px 20px;
+      background: #1a1f2e;
+      border: 1px solid #2e3a59;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .active {
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+    }
+
+    .list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .info {
+      font-size: 14px;
+    }
+
+    .status {
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .complete {
+      background: #1f9d55;
+    }
+
+    .partial {
+      background: #f59e0b;
+    }
+
+    .none {
+      background: #555;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="title">ADMIN PORTAL</div>
+    <button class="logout" onclick="logout()">LOGOUT</button>
+  </div>
+
+  <div class="nav">
+    <button onclick="go('teams')">TEAMS</button>
+    <button onclick="go('judges')">JUDGES</button>
+    <button onclick="go('assignments')">ASSIGNMENTS</button>
+    <button class="active">SCORES/AUDIT</button>
+  </div>
+
+  <div class="list" id="scoresList"></div>
+
+</div>
+
+<script>
+function go(page){
+  window.location.href = `admin-${page}.html`;
+}
+
+function logout(){
+  window.location.href = "../signin.html";
+}
+
+let teams = JSON.parse(localStorage.getItem("teams")) || [];
+let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+let scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+function getTeamStats(teamId){
+  const assigned = assignments.filter(a => a.teamId == teamId);
+  const submitted = scores.filter(s => s.teamId == teamId);
+
+  let avg = 0;
+  if(submitted.length > 0){
+    avg = submitted.reduce((sum, s) => sum + s.total, 0) / submitted.length;
+  }
+
+  let status = "none";
+  if(submitted.length === 0){
+    status = "none";
+  } else if(submitted.length < assigned.length){
+    status = "partial";
+  } else {
+    status = "complete";
+  }
+
+  return {
+    assigned: assigned.length,
+    submitted: submitted.length,
+    avg: avg.toFixed(1),
+    status
+  };
+}
+
+function render(){
+  const container = document.getElementById("scoresList");
+  container.innerHTML = "";
+
+  teams.forEach(team => {
+    const stats = getTeamStats(team.id);
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="info">
+        <div><b>${team.name}</b></div>
+        <div>Assigned Judges: ${stats.assigned}</div>
+        <div>Submissions: ${stats.submitted}</div>
+        <div>Average Score: ${stats.avg}</div>
+      </div>
+
+      <div class="status ${stats.status}">
+        ${stats.status === "complete" ? "COMPLETED" :
+          stats.status === "partial" ? "PARTIAL" : "NOT STARTED"}
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>

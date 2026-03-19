@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Team</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0f1c;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .modal {
+      background: #111827;
+      padding: 30px;
+      border-radius: 12px;
+      width: 400px;
+      max-width: 90%;
+      border: 1px solid #2e3a59;
+    }
+
+    .title {
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    label {
+      font-size: 12px;
+      color: #aaa;
+      display: block;
+      margin-top: 12px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      background: #0a0f1c;
+      border: 1px solid #2e3a59;
+      color: white;
+      border-radius: 6px;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .cancel {
+      background: transparent;
+      border: 1px solid #555;
+      color: white;
+    }
+
+    .create {
+      background: transparent;
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="modal">
+  <div class="title" id="formTitle">ADD NEW TEAM</div>
+
+  <label>TEAM NAME</label>
+  <input id="teamName" placeholder="Cool Team Name">
+
+  <label>PROJECT TITLE</label>
+  <input id="projectTitle" placeholder="Project Name">
+
+  <label>TRACK</label>
+  <select id="track">
+    <option>Health</option>
+    <option>Sustainability</option>
+    <option>AI</option>
+    <option>FinTech</option>
+  </select>
+
+  <label>DESCRIPTION</label>
+  <textarea id="desc"></textarea>
+
+  <div class="actions">
+    <button class="btn cancel" onclick="goBack()">CANCEL</button>
+    <button class="btn create" onclick="saveTeam()">CREATE TEAM</button>
+  </div>
+</div>
+
+<script>
+let teams = JSON.parse(localStorage.getItem("teams")) || [];
+let selectedId = localStorage.getItem("selectedTeam");
+
+if(selectedId){
+  const team = teams.find(t => t.id == selectedId);
+  if(team){
+    document.getElementById("formTitle").innerText = "EDIT TEAM";
+    document.querySelector(".create").innerText = "UPDATE TEAM";
+
+    document.getElementById("teamName").value = team.name;
+    document.getElementById("projectTitle").value = team.project || "";
+    document.getElementById("track").value = team.track;
+    document.getElementById("desc").value = team.desc;
+  }
+}
+
+function saveTeam(){
+  const name = document.getElementById("teamName").value.trim();
+  const project = document.getElementById("projectTitle").value.trim();
+  const track = document.getElementById("track").value;
+  const desc = document.getElementById("desc").value.trim();
+
+  if(!name || !project){
+    alert("Please fill required fields");
+    return;
+  }
+
+  if(selectedId){
+    // Update existing
+    teams = teams.map(t => {
+      if(t.id == selectedId){
+        return { ...t, name, project, track, desc };
+      }
+      return t;
+    });
+    localStorage.removeItem("selectedTeam");
+  } else {
+    // Create new
+    teams.push({
+      id: Date.now(),
+      name,
+      project,
+      track,
+      desc,
+      members: []
+    });
+  }
+
+  localStorage.setItem("teams", JSON.stringify(teams));
+  window.location.href = "admin-teams.html";
+}
+
+function goBack(){
+  localStorage.removeItem("selectedTeam");
+  window.location.href = "admin-teams.html";
+}
+</script>
+
+</body>
+</html>

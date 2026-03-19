@@ -1,0 +1,16 @@
+id,date,month,step,time,title,loc,cat,desc
+1,,April,0,,Registration,online,announcement,Resister to praticipate in hackathon
+1,4/18/2026,April,1,9:00 AM,Day 1 Check-in + Breakfast,SEH B1 Level,announcement,"Badge pickup, breakfast, and seating. Get ready for kickoff."
+2,4/18/2026,April,1,10:00 AM,Opening Ceremony,Lehman Auditorium,main,"Welcome, theme overview, rules, judging criteria, and sponsor intros."
+3,4/18/2026,April,1,12:00 PM,Lunch,SEH B1 Level,food,Lunch served; dietary options available.
+4,4/18/2026,April,1,1:00 PM,Hacking Begins!,SEH B1 Level,announcement,"Get feedback on problem framing, architecture, and demo plan."
+5,4/18/2026,April,1,2:00 PM,AWS Workshop,Lehman Auditorium,workshop,Showing you how to utilize AWS Cloud tools in your creations!
+6,4/18/2026,April,1,3:00:00 PM,Workshops,Lehman Auditorium,workshop,
+7,4/18/2026,April,1,6:00 PM,Dinner,SEH B1 Level,food,Dinner served; refuel and keep building.
+8,4/18/2026,April,1,9:00 PM,Late Night Games with GW E-Sports,Lehman Auditorium,networking,Quick break activities to recharge.
+9,4/19/2026,April,2,9:30 AM,Day 2 Check-In,SEH B1 Level,announcement,
+10,4/19/2026,April,2,11:00 AM,Demo Round Begins,SEH B1 Level,announcement,Round 1 of Demonstrations!
+11,4/19/2026,April,2,1:00 PM,Devpost Submission Deadline,Devpost,announcement,"Submit project page, repo links, and demo video if required."
+12,4/19/2026,April,2,1:30 PM,Pitch Round Begins,Lehman Auditorium,announcement,Live demos and judge Q&A.
+12,4/19/2026,April,2,3:30 PM,Winners Announced,SEH B1 Stage,announcement,"Awards, closing remarks, and group photo."
+13,4/19/2026,April,2,4:00 PM,Closing Ceremony,SEH B1 Stage,announcement,"Wrap-up, next steps, and community announcements."

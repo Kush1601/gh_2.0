@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Members</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0f1c;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .modal {
+      background: #111827;
+      padding: 25px;
+      border-radius: 12px;
+      width: 420px;
+      max-width: 90%;
+      border: 1px solid #2e3a59;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .member {
+      background: #0a0f1c;
+      border: 1px solid #2e3a59;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .member-info {
+      font-size: 14px;
+    }
+
+    .remove-btn {
+      border: 1px solid red;
+      color: red;
+      background: transparent;
+      padding: 4px 8px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      background: #0a0f1c;
+      border: 1px solid #2e3a59;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .close {
+      background: transparent;
+      border: 1px solid #555;
+      color: white;
+    }
+
+    .add {
+      background: transparent;
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="modal">
+
+  <div class="title" id="teamTitle">MEMBERS</div>
+
+  <div id="memberList"></div>
+
+  <label>MEMBER NAME</label>
+  <input id="memberName" placeholder="Jane Doe">
+
+  <label>MEMBER EMAIL</label>
+  <input id="memberEmail" placeholder="jane@example.com">
+
+  <div class="actions">
+    <button class="btn close" onclick="goBack()">CLOSE</button>
+    <button class="btn add" onclick="addMember()">ADD MEMBER</button>
+  </div>
+
+</div>
+
+<script>
+let teams = JSON.parse(localStorage.getItem("teams")) || [];
+let selectedId = localStorage.getItem("selectedTeam");
+
+if(!selectedId){
+  window.location.href = "admin-teams.html";
+}
+
+let team = teams.find(t => t.id == selectedId);
+
+document.getElementById("teamTitle").innerText = "MEMBERS: " + team.name;
+
+function renderMembers(){
+  const container = document.getElementById("memberList");
+  container.innerHTML = "";
+
+  team.members.forEach((m, index) => {
+    const div = document.createElement("div");
+    div.className = "member";
+
+    div.innerHTML = `
+      <div class="member-info">
+        <div>${m.name}</div>
+        <div style="color:#aaa;font-size:12px">${m.email}</div>
+      </div>
+      <button class="remove-btn" onclick="removeMember(${index})">X</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function addMember(){
+  const name = document.getElementById("memberName").value.trim();
+  const email = document.getElementById("memberEmail").value.trim();
+
+  if(!name || !email){
+    alert("Fill all fields");
+    return;
+  }
+
+  team.members.push({ name, email });
+
+  save();
+  renderMembers();
+
+  document.getElementById("memberName").value = "";
+  document.getElementById("memberEmail").value = "";
+}
+
+function removeMember(index){
+  team.members.splice(index, 1);
+  save();
+  renderMembers();
+}
+
+function save(){
+  teams = teams.map(t => t.id == selectedId ? team : t);
+  localStorage.setItem("teams", JSON.stringify(teams));
+}
+
+function goBack(){
+  localStorage.removeItem("selectedTeam");
+  window.location.href = "admin-teams.html";
+}
+
+renderMembers();
+</script>
+
+</body>
+</html>

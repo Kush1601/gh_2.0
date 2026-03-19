@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0f1c;
+      color: white;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .logout {
+      border: 1px solid #999;
+      background: transparent;
+      color: white;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav button {
+      padding: 10px 20px;
+      background: #1a1f2e;
+      border: 1px solid #2e3a59;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .active {
+      border: 1px solid #3aa0ff;
+      color: #3aa0ff;
+    }
+
+    .form {
+      margin-top: 20px;
+      background: #111827;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    label {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 10px;
+      display: block;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      background: #0a0f1c;
+      border: 1px solid #2e3a59;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .teams-list {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .team-chip {
+      padding: 8px 12px;
+      border: 1px solid #3aa0ff;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .selected {
+      background: #3aa0ff;
+      color: black;
+    }
+
+    .assign-btn {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #3aa0ff;
+      background: transparent;
+      color: #3aa0ff;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .list {
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="title">ADMIN PORTAL</div>
+    <button class="logout" onclick="logout()">LOGOUT</button>
+  </div>
+
+  <div class="nav">
+    <button onclick="go('teams')">TEAMS</button>
+    <button onclick="go('judges')">JUDGES</button>
+    <button class="active">ASSIGNMENTS</button>
+    <button onclick="go('scores')">SCORES/AUDIT</button>
+  </div>
+
+  <div class="form">
+
+    <label>Select Judge</label>
+    <select id="judgeSelect"></select>
+
+    <label>Select Teams</label>
+    <div class="teams-list" id="teamsList"></div>
+
+    <button class="assign-btn" onclick="assign()">ASSIGN TEAMS</button>
+
+  </div>
+
+  <div class="list" id="assignmentList"></div>
+
+</div>
+
+<script>
+function go(page){
+  window.location.href = `admin-${page}.html`;
+}
+
+function logout(){
+  window.location.href = "../signin.html";
+}
+
+let judges = JSON.parse(localStorage.getItem("judges")) || [];
+let teams = JSON.parse(localStorage.getItem("teams")) || [];
+let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+
+let selectedTeams = [];
+
+function renderJudges(){
+  const select = document.getElementById("judgeSelect");
+  select.innerHTML = "";
+
+  judges.forEach(j => {
+    const opt = document.createElement("option");
+    opt.value = j.id;
+    opt.textContent = j.email;
+    select.appendChild(opt);
+  });
+}
+
+function renderTeams(){
+  const container = document.getElementById("teamsList");
+  container.innerHTML = "";
+
+  teams.forEach(t => {
+    const div = document.createElement("div");
+    div.className = "team-chip";
+    div.innerText = t.name;
+
+    div.onclick = () => {
+      if(selectedTeams.includes(t.id)){
+        selectedTeams = selectedTeams.filter(id => id !== t.id);
+        div.classList.remove("selected");
+      } else {
+        selectedTeams.push(t.id);
+        div.classList.add("selected");
+      }
+    };
+
+    container.appendChild(div);
+  });
+}
+
+function assign(){
+  const judgeId = document.getElementById("judgeSelect").value;
+
+  selectedTeams.forEach(teamId => {
+    const exists = assignments.find(a => a.judgeId == judgeId && a.teamId == teamId);
+
+    if(!exists){
+      assignments.push({
+        id: Date.now() + Math.random(),
+        judgeId,
+        teamId
+      });
+    }
+  });
+
+  localStorage.setItem("assignments", JSON.stringify(assignments));
+  selectedTeams = [];
+  renderAssignments();
+  renderTeams();
+}
+
+function renderAssignments(){
+  const container = document.getElementById("assignmentList");
+  container.innerHTML = "";
+
+  assignments.forEach(a => {
+    const judge = judges.find(j => j.id == a.judgeId);
+    const team = teams.find(t => t.id == a.teamId);
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div><b>${judge?.email}</b> → ${team?.name}</div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+renderJudges();
+renderTeams();
+renderAssignments();
+</script>
+
+</body>
+</html>

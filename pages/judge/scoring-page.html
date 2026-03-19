@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scoring | George Hacks</title>
+
+    <link rel="stylesheet" href="../../app/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="../../app/dist/app.css" />
+    <link rel="stylesheet" href="../../assets/font/font-awesome.css" />
+    <link rel="stylesheet" href="../../app/dist/judge.css" />
+    <link rel="shortcut icon" href="../../assets/images/last.svg" />
+</head>
+
+<body>
+
+    <div class="jd-container" style="max-width: 900px; padding-top: 40px;">
+
+        <!-- Navigation back to dashboard -->
+        <a href="judge-dashboard.html" class="tf-button btn-effect"
+            style="margin-bottom:30px;display:inline-flex; transform: scale(0.85); transform-origin: left;">
+            <span class="boder-fade"></span>
+            <span class="effect">← Back to Dashboard</span>
+        </a>
+
+        <div class="jd-scoring-card" id="scoringCard">
+            <!-- Loading state -->
+            <div style="text-align:center; color: #a0aab2; padding: 40px;">Loading team data...</div>
+        </div>
+    </div>
+
+    <script>
+        // ----------------------------------------------------
+        // Mock Database Logic (shared between pages if needed)
+        // ----------------------------------------------------
+        async function getJudgeData() {
+            // 1. Check if we have modified data in localStorage
+            const cached = localStorage.getItem('judge_teams_data');
+            if (cached) {
+                return JSON.parse(cached);
+            }
+
+            // 2. Otherwise load initial data from JSON
+            try {
+                const response = await fetch('../../assets/data/judge_teams.json');
+                if (!response.ok) throw new Error('Failed to load JSON');
+                const data = await response.json();
+                // pre-calculate any missing totals
+                data.assignedTeams.forEach(t => {
+                    if (t.totalScore === undefined) t.totalScore = 0;
+                });
+                localStorage.setItem('judge_teams_data', JSON.stringify(data));
+                return data;
+            } catch (err) {
+                console.error("Error loading judge data:", err);
+                return null;
+            }
+        }
+
+        function saveJudgeData(data) {
+            localStorage.setItem('judge_teams_data', JSON.stringify(data));
+        }
+
+
+        // ----------------------------------------------------
+        // Scoring Page Logic
+        // ----------------------------------------------------
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get Team ID from URL parameters: scoring-page.html?teamId=healthsync
+            const urlParams = new URLSearchParams(window.location.search);
+            const teamId = urlParams.get('teamId');
+
+            if (!teamId) {
+                document.getElementById('scoringCard').innerHTML = `<div style="color:#ff6b6b">No Team ID provided. Return to dashboard.</div>`;
+                return;
+            }
+
+            const dbData = await getJudgeData();
+            if (!dbData) return;
+
+            const team = dbData.assignedTeams.find(t => t.id === teamId);
+            const criteriaList = dbData.scoreCriteria;
+
+            if (!team) {
+                document.getElementById('scoringCard').innerHTML = `<div style="color:#ff6b6b">Team not found.</div>`;
+                return;
+            }
+
+            renderScoringForm(team, criteriaList);
+        });
+
+        function renderScoringForm(team, criteriaList) {
+            const container = document.getElementById('scoringCard');
+            const isLocked = team.readOnly === true;
+            const maxScore = criteriaList.length * 10;
+
+            let html = `
+        <div class="jd-scoring-header">
+          <h1 class="jd-scoring-title">SCORING: ${team.name}</h1>
+          <p class="jd-scoring-subtitle">${team.subtitle}</p>
+          <p style="font-size:13px;color:#a0aab2;margin-top:8px;">${team.description}</p>
+      `;
+
+            if (isLocked) {
+                html += `
+          <div class="jd-locked-banner" style="margin-top:15px;">
+            ✓ VIEWING LOCKED SCORE (Already submitted)
+          </div>
+        `;
+            }
+
+            html += `
+          <p style="font-size:12px;color:#7a8590;margin-top:12px;">Score each criteria from 1 to 10 (Max: ${maxScore})</p>
+        </div>
+      `;
+
+            html += `<form id="scoringForm">`;
+
+            criteriaList.forEach(crit => {
+                const value = team.scores[crit.id] || '';
+
+                html += `
+          <div class="jd-criteria-item">
+            <span class="jd-criteria-name">${crit.name}</span>
+            <div class="jd-score-input-wrapper">
+              <input type="number" 
+                     class="jd-score-input score-calc" 
+                     name="${crit.id}" 
+                     min="1" max="10" 
+                     value="${value}" 
+                     ${isLocked ? 'readonly' : 'required'} 
+                     ${!isLocked ? 'onchange="this.value = Math.max(1, Math.min(10, this.value || 0))"' : ''}
+              />
+            </div>
+          </div>
+        `;
+            });
+
+            html += `
+        <div class="jd-comments-section">
+          <label class="jd-comments-label">COMMENTS (MIN 20 CHARACTERS)</label>
+          <textarea class="jd-comments-textarea" 
+                    name="comments" 
+                    minlength="20"
+                    maxlength="500"
+                    ${isLocked ? 'readonly' : 'required'} 
+                    placeholder="Enter your feedback here..."
+          >${team.comments || ''}</textarea>
+          <div style="font-size:11px;color:#a0aab2;margin-top:4px;" id="charCount"></div>
+        </div>
+      `;
+
+            html += `
+        <div class="jd-total-row">
+          <span class="jd-total-label">TOTAL SCORE</span>
+          <span class="jd-total-value" id="displayTotal">${team.totalScore || 0}</span>
+          <span style="font-size:11px;color:#a0aab2;">/ ${maxScore}</span>
+        </div>
+      `;
+
+            if (!isLocked) {
+                html += `
+          <button type="submit" class="jd-submit-btn">
+            SUBMIT SCORES
+          </button>
+        `;
+            } else {
+                html += `
+          <button type="button" class="jd-submit-btn" onclick="window.location.href='judge-dashboard.html'" style="background:#7a8590;">
+            BACK TO DASHBOARD
+          </button>
+        `;
+            }
+
+            html += `</form>`;
+            container.innerHTML = html;
+
+            if (!isLocked) {
+                setupDynamicCalculation();
+                setupFormSubmit(team.id);
+                setupCharCounter();
+            }
+        }
+
+        function setupCharCounter() {
+            const textarea = document.querySelector('.jd-comments-textarea');
+            const charCount = document.getElementById('charCount');
+            
+            const updateCount = () => {
+                const count = textarea.value.length;
+                charCount.textContent = `${count}/500 characters`;
+                if (count < 20) {
+                    charCount.style.color = '#ff6b6b';
+                } else {
+                    charCount.style.color = '#7a8590';
+                }
+            };
+            
+            textarea.addEventListener('input', updateCount);
+            updateCount();
+        }
+
+        function setupDynamicCalculation() {
+            const inputs = document.querySelectorAll('.score-calc');
+            const displayTotal = document.getElementById('displayTotal');
+
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    let sum = 0;
+                    inputs.forEach(inp => {
+                        const val = parseInt(inp.value, 10);
+                        if (!isNaN(val)) sum += val;
+                    });
+                    displayTotal.textContent = sum;
+                });
+            });
+        }
+
+        function setupFormSubmit(teamId) {
+            const form = document.getElementById('scoringForm');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!form.reportValidity()) {
+                    alert('Please fill all required fields correctly.');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'SUBMITTING...';
+
+                try {
+                    const dbData = await getJudgeData();
+                    const teamIndex = dbData.assignedTeams.findIndex(t => t.id === teamId);
+
+                    if (teamIndex === -1) {
+                        alert('Team not found.');
+                        return;
+                    }
+
+                    const formData = new FormData(form);
+                    const newScores = {};
+                    let total = 0;
+
+                    dbData.scoreCriteria.forEach(crit => {
+                        const val = parseInt(formData.get(crit.id), 10);
+                        if (isNaN(val) || val < 1 || val > 10) {
+                            throw new Error(`Invalid score for ${crit.name}`);
+                        }
+                        newScores[crit.id] = val;
+                        total += val;
+                    });
+
+                    const comments = formData.get('comments');
+                    if (!comments || comments.length < 20) {
+                        throw new Error('Comments must be at least 20 characters.');
+                    }
+
+                    dbData.assignedTeams[teamIndex].scores = newScores;
+                    dbData.assignedTeams[teamIndex].comments = comments;
+                    dbData.assignedTeams[teamIndex].totalScore = total;
+                    dbData.assignedTeams[teamIndex].readOnly = true;
+                    dbData.assignedTeams[teamIndex].status = "SUBMITTED";
+                    dbData.assignedTeams[teamIndex].actionText = "VIEW SCORE";
+
+                    saveJudgeData(dbData);
+
+                    alert("✓ Scores submitted successfully!");
+                    window.location.href = "judge-dashboard.html";
+
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    alert(`Error: ${error.message}`);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'SUBMIT SCORES';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
